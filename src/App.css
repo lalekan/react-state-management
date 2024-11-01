@@ -7,3 +7,8 @@ li {
   list-style: none;
   margin: 10px;
 }
+
+ div ul {
+  display: flex;
+  align-content: flex-start;
+ }
