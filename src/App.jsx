@@ -11,6 +11,8 @@ const App = () => {
 
   const [money, setMoney] = useState(100)
 
+  const [totalStrength, setTotalStrength] = useState(0)
+
   const [zombieFighters, setZombieFighters] = useState([
     {
       name: 'Survivor',
@@ -85,26 +87,69 @@ const App = () => {
   ]
   )
 
-  return (
+  const handleAddFighter = (zombieFighters) => {
+    const newTeamArray = money >= zombieFighters.price ? [...team, zombieFighters] : team
+    setTeam(newTeamArray)
+
+    const currentBalance = money >= zombieFighters.price ? money - zombieFighters.price : money
+
+    setMoney(currentBalance)
+
+    const strengthBalance = money >= zombieFighters.price ? totalStrength + zombieFighters.strength : totalStrength
+
+    setTotalStrength(strengthBalance)
+
+    if (currentBalance > zombieFighters.price) {
+      setTeam(newTeamArray); setMoney(currentBalance); 
+    } else {
+      console.log("Not enough money");
+    }
+
     
+
+
+  }
+
+  const displayMessage = team.length < 1 ? "Pick some team members!" : " "
+
+  return (
     <>
-    <h1>Hello world!
-    </h1><div>
+      <h1>Current Money: {money}  </h1>
+      <div>
         <ul>
-        {zombieFighters.map((zombieFighter, idx) => (
-          <>
-          <li key={idx}>Name: {zombieFighter.name}</li>
-          <li>Price: ${zombieFighter.price}</li>
-          <li>Strength: {zombieFighter.strength}</li>
-          <li>Agility: {zombieFighter.agility}</li>
-          <img src={zombieFighter.img}></img>
-          </>
-        ))}
+          {zombieFighters.map((zombieFighter, idx) => (
+            <div key={idx} className="zombie-card">
+              <button onClick={() => handleAddFighter(zombieFighter)}> Add Fighter</button>
+              <li>Name: {zombieFighter.name}</li>
+              <li>Price: {zombieFighter.price}</li>
+              <li>Strength: {zombieFighter.strength}</li>
+              <li>Agility: {zombieFighter.agility}</li>
+              <img src={zombieFighter.img} alt={zombieFighter.name} />
+              
+            </div>
+          ))}
         </ul>
       </div>
-      </>
-  );
+      <h1>This is your team.  </h1>
+      <h2>Total Strength: {totalStrength}</h2>
+      <h2>{displayMessage}</h2>
+      <div>
+        <ul>
+          {team.map((member, idx) => (
+            <div key={idx} className="team-member">
+              <li>Name: {member.name}</li>
+              <li>Price: {member.price}</li>
+              <li>Strength: {member.strength}</li>
+              <li>Agility: {member.agility}</li>
+              <img src={member.img} alt={member.name} />
+            </div>
+          ))}
+        </ul>
+      </div>
+    </>
+  )
 }
+
 
 export default App
 
