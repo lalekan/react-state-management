@@ -13,6 +13,8 @@ const App = () => {
 
   const [totalStrength, setTotalStrength] = useState(0)
 
+  const [totalAgility, setTotalAgility] = useState(0)
+
   const [zombieFighters, setZombieFighters] = useState([
     {
       name: 'Survivor',
@@ -87,28 +89,49 @@ const App = () => {
   ]
   )
 
-  const handleAddFighter = (zombieFighters) => {
-    const newTeamArray = money >= zombieFighters.price ? [...team, zombieFighters] : team
+  const handleAddFighter = (zombieFighter) => {
+    const newTeamArray = money >= zombieFighter.price ? [...team, zombieFighter] : team
     setTeam(newTeamArray)
 
-    const currentBalance = money >= zombieFighters.price ? money - zombieFighters.price : money
+    const currentBalance = money >= zombieFighter.price ? money - zombieFighter.price : money
 
     setMoney(currentBalance)
 
-    const strengthBalance = money >= zombieFighters.price ? totalStrength + zombieFighters.strength : totalStrength
+    const strengthBalance = money >= zombieFighter.price ? totalStrength + zombieFighter.strength : totalStrength
 
     setTotalStrength(strengthBalance)
 
-    if (currentBalance > zombieFighters.price) {
-      setTeam(newTeamArray); setMoney(currentBalance); 
+    const AgilityBalance = money >= zombieFighter.price ? totalAgility + zombieFighter.agility : totalAgility
+
+    setTotalAgility(AgilityBalance)
+
+    if (currentBalance > zombieFighter.price) {
+      // setTeam(newTeamArray); setMoney(currentBalance); 
     } else {
       console.log("Not enough money");
     }
 
-    
-
-
   }
+
+  const handleRemoveFighter = (member) => {
+    const removeFighter = team.find(amember => amember.name == member.name);
+    
+    if (removeFighter !== -1) {
+      const newTeamArray = team.filter((member) => member.name !== removeFighter.name);
+      setTeam(newTeamArray);
+
+      const currentBalance = money + removeFighter.price;
+      setMoney(currentBalance);
+
+      const strengthBalance = totalStrength - removeFighter.strength;
+      setTotalStrength(strengthBalance);
+
+      const agilityBalance = totalAgility - removeFighter.agility;
+      setTotalAgility(agilityBalance);
+    } else {
+      console.log("Fighter not found in the team");
+    }
+  };
 
   const displayMessage = team.length < 1 ? "Pick some team members!" : " "
 
@@ -131,12 +154,13 @@ const App = () => {
         </ul>
       </div>
       <h1>This is your team.  </h1>
-      <h2>Total Strength: {totalStrength}</h2>
+      <h2>Total Strength: {totalStrength};  Total Agility: {totalAgility}</h2>
       <h2>{displayMessage}</h2>
       <div>
         <ul>
           {team.map((member, idx) => (
             <div key={idx} className="team-member">
+              <button onClick={() => handleRemoveFighter(member)}>Remove from Team</button>
               <li>Name: {member.name}</li>
               <li>Price: {member.price}</li>
               <li>Strength: {member.strength}</li>
