@@ -137,7 +137,27 @@ const App = () => {
 
   return (
     <>
-      <h1>Current Money: {money}  </h1>
+    <h1 className= "abcd" >Zombie Fighters  </h1>
+      <h2 className= "abcd">Current Money: {money}  </h2>
+      <h2 className= "abcd">Total Strength: {totalStrength}</h2>
+      <h2 className= "abcd">Total Agility: {totalAgility}</h2>
+      <h2 className= "abcd">Team</h2>
+      <h5 className= "abcd">{displayMessage}</h5>
+      <div>
+        <ul>
+          {team.map((member, idx) => (
+            <div key={idx} className="team-member">
+              <button onClick={() => handleRemoveFighter(member)}>Remove from Team</button>
+              <li>Name: {member.name}</li>
+              <li>Price: {member.price}</li>
+              <li>Strength: {member.strength}</li>
+              <li>Agility: {member.agility}</li>
+              <img src={member.img} alt={member.name} />
+            </div>
+          ))}
+        </ul>
+      </div>
+      <h2>Fighters  </h2>
       <div>
         <ul>
           {zombieFighters.map((zombieFighter, idx) => (
@@ -153,23 +173,7 @@ const App = () => {
           ))}
         </ul>
       </div>
-      <h1>This is your team.  </h1>
-      <h2>Total Strength: {totalStrength};  Total Agility: {totalAgility}</h2>
-      <h2>{displayMessage}</h2>
-      <div>
-        <ul>
-          {team.map((member, idx) => (
-            <div key={idx} className="team-member">
-              <button onClick={() => handleRemoveFighter(member)}>Remove from Team</button>
-              <li>Name: {member.name}</li>
-              <li>Price: {member.price}</li>
-              <li>Strength: {member.strength}</li>
-              <li>Agility: {member.agility}</li>
-              <img src={member.img} alt={member.name} />
-            </div>
-          ))}
-        </ul>
-      </div>
+      
     </>
   )
 }

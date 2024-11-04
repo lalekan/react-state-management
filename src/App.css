@@ -1,6 +1,7 @@
 ul {
   display: flex;
   flex-wrap: wrap;
+  
 }
 
 li {
@@ -11,4 +12,11 @@ li {
  div ul {
   display: flex;
   align-content: flex-start;
+  
  }
+
+
+
+ 
+
+
