@@ -106,7 +106,7 @@ const App = () => {
     setTotalAgility(AgilityBalance)
 
     if (currentBalance > zombieFighter.price) {
-      // setTeam(newTeamArray); setMoney(currentBalance); 
+      
     } else {
       console.log("Not enough money");
     }
